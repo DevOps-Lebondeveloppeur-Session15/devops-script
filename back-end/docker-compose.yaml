@@ -1,0 +1,41 @@
+services:
+  Backend:
+    image: talel12/api-session15
+    depends_on:
+      - mongo
+    ports:
+      - 3001:3001
+    env_file:
+      - .env
+    networks:
+      - network1
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: prod-user
+      MONGO_INITDB_ROOT_PASSWORD: 7mjèpPP555talel6rtyhh
+    volumes:
+      - /data/db
+    networks:
+      - network1
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://prod-user:7mjèpPP555talel6rtyhh@mongo:27017/
+      ME_CONFIG_BASICAUTH_ENABLED: true
+      ME_CONFIG_BASICAUTH_USERNAME: user
+      ME_CONFIG_BASICAUTH_PASSWORD: password
+    networks:
+      - network1
+
+volumes:
+  mongo-volume:
+
+networks:
+  network1:
